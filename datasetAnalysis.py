@@ -46,7 +46,7 @@ for j in range(i + 1, len(axes)):
     fig.delaxes(axes[j])
 
 plt.tight_layout()
-plt.show()
+plt.show(block=False)
 
 
 # Categorical features
@@ -91,7 +91,7 @@ for j in range(len(categorical_cols), len(axes)):
     fig.delaxes(axes[j])
 
 plt.tight_layout()
-plt.show()
+plt.show(block=False)
 
 
 # Correlation matrix for numerical features
@@ -101,4 +101,7 @@ plt.figure(figsize=(10, 8))
 sns.heatmap(corr, annot=True, cmap='coolwarm', fmt=".2f", square=True)
 plt.title('Correlation Matrix for Numerical Features')
 plt.tight_layout()
+plt.show(block=False)
+
+
 plt.show()
