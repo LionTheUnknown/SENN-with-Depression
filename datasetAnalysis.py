@@ -92,3 +92,13 @@ for j in range(len(categorical_cols), len(axes)):
 
 plt.tight_layout()
 plt.show()
+
+
+# Correlation matrix for numerical features
+corr = df[numerical_cols + ['Depression']].corr()
+
+plt.figure(figsize=(10, 8))
+sns.heatmap(corr, annot=True, cmap='coolwarm', fmt=".2f", square=True)
+plt.title('Correlation Matrix for Numerical Features')
+plt.tight_layout()
+plt.show()
