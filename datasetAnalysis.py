@@ -1,18 +1,12 @@
 import pandas as pd
+import os
+import matplotlib.pyplot as plt
+import seaborn as sns
 
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 df = pd.read_csv('Student Depression Dataset.csv')
 
 print(df.head())
-
-
-import pandas as pd
-import matplotlib.pyplot as plt
-
-# Load the data
-df = pd.read_csv('Student Depression Dataset.csv')
-
-
-
 
 # Numerical features
 
@@ -56,10 +50,6 @@ print("Categorical columns and number of unique categories:\n")
 for col in categorical_cols:
     n_unique = df[col].nunique()
     print(f"{col}: {n_unique} categories")
-
-
-
-import seaborn as sns
 
 
 # Categorical columns
