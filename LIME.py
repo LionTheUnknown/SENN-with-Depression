@@ -6,6 +6,28 @@ from keras import layers, models
 from lime import lime_tabular
 import numpy as np
 
+# Get original values for the test instance
+def get_original_values(instance_idx, X_test_scaled, scaler, feature_names, df):
+    X_test_original = scaler.inverse_transform(X_test_scaled)
+    
+    instance = X_test_original[instance_idx]
+    
+    original_values = {}
+    for i, feature in enumerate(feature_names):
+        value = instance[i]
+        
+        # For categorical features, convert back to original category
+        if feature in cat_cols:
+            unique_values = df[feature].unique()
+            closest_idx = int(round(value))
+            # Ensure index is in range
+            closest_idx = max(0, min(closest_idx, len(unique_values)-1))
+            original_values[feature] = unique_values[closest_idx]
+        else:
+            original_values[feature] = value
+    return original_values
+
+
 # Load dataset
 # os.chdir(os.path.dirname(os.path.abspath(__file__)))
 df = pd.read_csv('Student Depression Dataset.csv').dropna()
@@ -69,6 +91,16 @@ exp = explainer.explain_instance(
     data_row=X_test[i],
     predict_fn=lambda x: np.hstack((1 - model.predict(x), model.predict(x)))
 )
+
+
+
+# Display original values for instance at index 5
+original_values = get_original_values(5, X_test, scaler, feature_names, df)
+print("\nOriginal values for instance at index 5:")
+for feature, value in original_values.items():
+    print(f"{feature}: {value}")
+
+
 
 # exp.show_in_notebook(show_table=True, show_all=False)
 os.makedirs('LIME-results', exist_ok=True)
