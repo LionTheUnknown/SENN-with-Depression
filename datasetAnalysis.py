@@ -39,7 +39,7 @@ for i, col in enumerate(numerical_cols):
 for j in range(i + 1, len(axes)):
     fig.delaxes(axes[j])
 
-plt.tight_layout()
+plt.tight_layout(pad=3.0, w_pad=2.0, h_pad=4.0)
 plt.show(block=False)
 
 
@@ -66,13 +66,14 @@ categorical_cols = [
 
 sns.set(style="whitegrid")
 
-fig, axes = plt.subplots(4, 2, figsize=(18, 20))  # 4 rows, 2 columns
-axes = axes.flatten()  # Flatten to easily index
+fig, axes = plt.subplots(4, 2, figsize=(22, 28),
+                        gridspec_kw={'hspace': 1.2, 'wspace': 0.5})
+axes = axes.flatten()
 
 # Plot each categorical column
 for idx, col in enumerate(categorical_cols):
     sns.countplot(data=df, x=col, hue='Depression', palette={0: 'blue', 1: 'red'}, ax=axes[idx])
-    axes[idx].set_title(f'{col} vs Depression')
+    axes[idx].set_title(f'{col} vs Depression', fontsize=16, pad=20)
     axes[idx].tick_params(axis='x', rotation=45)
     axes[idx].legend(title='Depression', labels=['No', 'Yes'])
 
@@ -80,7 +81,8 @@ for idx, col in enumerate(categorical_cols):
 for j in range(len(categorical_cols), len(axes)):
     fig.delaxes(axes[j])
 
-plt.tight_layout()
+plt.tight_layout(pad=5.0, w_pad=5.0, h_pad=12.0)
+plt.subplots_adjust(hspace=0.5)
 plt.show(block=False)
 
 
